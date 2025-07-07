@@ -1,8 +1,8 @@
 export default [
   {
     id: "ea578a01-9581-4fc7-9423-8ad0eb7c5fc6",
-    createdAt: "2024-09-23T13:17:46.393Z",
-    finishedAt: "2024-09-23T14:56:16.132Z",
+    createdAt: "2025-07-07T05:00:00.000Z",
+    finishedAt: "2024-07-25T14:56:16.132Z",
     exercises: [
       {
         id: "f5aa8995-73d8-4500-b99b-e0a57e54f0fb",
@@ -57,7 +57,7 @@ export default [
   },
   {
     id: "93c2bcbe-caa6-483d-9145-ba9a9d340028",
-    createdAt: "2024-09-23T13:08:21.922Z",
+    createdAt: "2025-07-07T17:00:00.000Z",
     finishedAt: "2024-09-23T13:10:07.670Z",
     exercises: [
       {
@@ -183,7 +183,7 @@ export default [
   },
   {
     id: "c8b9f510-0860-4f20-b5a9-581596bb103b",
-    createdAt: "2024-09-23T13:07:08.470Z",
+    createdAt: "2025-07-07T17:00:00.000Z",
     finishedAt: "2024-09-23T13:08:11.553Z",
     exercises: [
       {
@@ -274,7 +274,7 @@ export default [
   },
   {
     id: "ba325bed-c7ea-42d3-a617-5828f0bbdf4f",
-    createdAt: "2024-09-23T13:05:17.072Z",
+    createdAt: "2025-07-07T17:00:00.000Z",
     finishedAt: "2024-09-23T13:06:36.337Z",
     exercises: [
       {
@@ -337,7 +337,7 @@ export default [
   },
   {
     id: "773f7b55-869a-4d20-b937-8784616e14a1",
-    createdAt: "2024-09-23T11:21:24.390Z",
+    createdAt: "2025-07-07T17:00:00.000Z",
     finishedAt: "2024-09-23T13:05:14.490Z",
     exercises: [
       {
@@ -428,7 +428,7 @@ export default [
   },
   {
     id: "e4b636c7-9f7c-4c41-9154-6f9aa605e123",
-    createdAt: "2024-09-23T11:19:33.890Z",
+    createdAt: "2025-07-07T17:00:00.000Z",
     finishedAt: "2024-09-23T11:20:06.090Z",
     exercises: [
       {
@@ -456,7 +456,7 @@ export default [
   },
   {
     id: "9abb5d80-59fb-4cf9-b932-84f9b0bde9fd",
-    createdAt: "2024-09-23T11:02:35.187Z",
+    createdAt: "2025-07-07T17:00:00.000Z",
     finishedAt: "2024-09-23T11:03:02.351Z",
     exercises: [
       {
@@ -484,7 +484,7 @@ export default [
   },
   {
     id: "70364481-413e-4432-a46d-b6a643923b1e",
-    createdAt: "2024-09-23T10:58:10.886Z",
+    createdAt: "2025-07-07T17:00:00.000Z",
     finishedAt: "2024-09-23T10:58:28.469Z",
     exercises: [
       {
@@ -497,13 +497,13 @@ export default [
   },
   {
     id: "4d17a4d5-a80f-4813-bef7-aca4bb0d3df9",
-    createdAt: "2024-09-23T10:57:59.351Z",
+    createdAt: "2025-07-07T17:00:00.000Z",
     finishedAt: "2024-09-23T10:58:06.932Z",
     exercises: [],
   },
   {
     id: "43687359-b694-4164-8411-e6a425199bab",
-    createdAt: "2024-09-23T10:56:53.687Z",
+    createdAt: "2025-07-07T17:00:00.000Z",
     finishedAt: "2024-09-23T10:57:06.231Z",
     exercises: [
       {
@@ -516,7 +516,7 @@ export default [
   },
   {
     id: "2d7de2e0-b532-4279-9270-160839a04985",
-    createdAt: "2024-09-23T10:53:55.000Z",
+    createdAt: "2025-07-07T17:00:00.000Z",
     finishedAt: "2024-09-23T10:53:55.000Z",
     exercises: [
       {
@@ -537,7 +537,7 @@ export default [
   },
   {
     id: "9f1ec004-257f-4e5e-a24a-3494a1c7557c",
-    createdAt: "2024-09-23T10:53:55.000Z",
+    createdAt: "2025-07-07T17:00:00.000Z",
     finishedAt: "2024-09-23T10:53:55.000Z",
     exercises: [
       {
@@ -558,7 +558,7 @@ export default [
   },
   {
     id: "143d5c91-42cb-4b6a-9351-5d780a1a091b",
-    createdAt: "2024-09-23T10:53:55.000Z",
+    createdAt: "2025-07-07T17:00:00.000Z",
     finishedAt: "2024-09-23T10:53:55.000Z",
     exercises: [],
   },
