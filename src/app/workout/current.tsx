@@ -5,6 +5,7 @@ import { useHeaderHeight } from "@react-navigation/elements";
 import { Stack } from "expo-router";
 import CustomButton from "@/components/general/CustomButton";
 import WorkoutHeader from "@/components/logger/WorkoutHeader";
+import SelectExerciseModal from "@/components/logger/SelectExerciseModal";
 
 export default function CurrentWorkoutScreen() {
   const headerHeight = useHeaderHeight();
@@ -26,10 +27,17 @@ export default function CurrentWorkoutScreen() {
         keyboardVerticalOffset={headerHeight}
       >
         <FlatList
-          data={[1, 2]}
+          data={[1, 2, 3]}
           contentContainerStyle={{ gap: 10, padding: 10 }}
           renderItem={({ item }) => <WorkoutExerciseItem />}
           ListHeaderComponent={<WorkoutHeader />}
+          ListFooterComponent={
+            <SelectExerciseModal
+              onSelectExercise={(name) => {
+                console.log(name, "selected");
+              }}
+            />
+          }
         />
       </KeyboardAvoidingView>
     </>
