@@ -3,16 +3,17 @@ import { Text, View } from "../general/Themed";
 import dummyWorkouts from "@/data/dummyWorkouts";
 import { calculateDurationHourMinutes } from "@/utils/Time";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { useWorkouts } from "@/store";
 
 export default function WorkoutHeader() {
   const [timer, setTimer] = useState("0:00");
 
-  const workout = dummyWorkouts[0];
+  const workout = useWorkouts((state) => state.currentWorkout);
 
   useEffect(() => {
     const interval = setInterval(() => {
       const duration = calculateDurationHourMinutes(
-        new Date(workout.createdAt),
+        new Date(workout?.createdAt || ""),
         new Date()
       );
       setTimer(duration);

@@ -3,15 +3,18 @@ import Card from "@/components/general/Card";
 import { Text, View } from "@/components//general/Themed";
 import { StyleSheet } from "react-native";
 import SetItem from "./SetItem";
-import dummyWorkouts from "@/data/dummyWorkouts";
-import { ExerciseSet } from "@/types/models";
+import { ExerciseSet, ExerciseWithSets } from "@/types/models";
 import CustomButton from "../general/CustomButton";
 
-export default function WorkoutExerciseItem() {
-  const sets: ExerciseSet[] = dummyWorkouts[2].exercises[1].sets;
+export default function WorkoutExerciseItem({
+  exercise,
+}: {
+  exercise: ExerciseWithSets;
+}) {
+  const sets = exercise.sets;
 
   return (
-    <Card title="Exercise">
+    <Card title={exercise.name}>
       <View style={styles.header}>
         <Text style={styles.setNumber}>Set</Text>
         <Text style={styles.setInfo}>kg</Text>

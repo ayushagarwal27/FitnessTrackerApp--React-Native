@@ -3,6 +3,7 @@ import {
   ExerciseWithSets,
   WorkoutWithExercises,
 } from "@/types/models";
+import * as Crypto from "expo-crypto";
 
 export const getSetTotalWeight = (set: ExerciseSet) => {
   return (set.weight || 0) * (set?.reps || 0);
@@ -28,4 +29,30 @@ export const getBestSet = (sets: ExerciseSet[]) => {
       (currSet?.oneRM || 0) > (bestSet?.oneRM || 0) ? currSet : bestSet,
     null
   );
+};
+
+export const generateNewWorkout = () => {
+  return {
+    id: Crypto.randomUUID(),
+    createdAt: new Date(),
+    finishedAt: null,
+    exercises: [],
+  };
+};
+
+export const finishWorkout = (workout: WorkoutWithExercises) => {
+  return {
+    ...workout,
+    finishedAt: new Date(),
+  };
+};
+
+export const createExercise = (name: string, workoutId: string) => {
+  const newExercise: ExerciseWithSets = {
+    id: Crypto.randomUUID(),
+    name,
+    workoutId,
+    sets: [],
+  };
+  return newExercise;
 };
