@@ -41,8 +41,9 @@ export const generateNewWorkout = () => {
 };
 
 export const finishWorkout = (workout: WorkoutWithExercises) => {
+  const cleanedWorkout = cleanWorkout(workout);
   return {
-    ...workout,
+    ...cleanedWorkout,
     finishedAt: new Date(),
   };
 };
@@ -84,4 +85,28 @@ export const updateSet = (
     updatedSet.oneRM = updatedSet.weight * (36.0 / (37.0 - updatedSet.reps));
   }
   return updatedSet;
+};
+
+const isSetComplete = (set: ExerciseSet) => {
+  return set.reps && set.reps > 0;
+};
+
+export const cleanSets = (sets: ExerciseSet[]) => {
+  return sets.filter(isSetComplete);
+};
+
+export const cleanExercise = (exercise: ExerciseWithSets) => {
+  const cleanedSets = cleanSets(exercise.sets);
+  if (cleanedSets.length === 0) return null;
+  return { ...exercise, sets: cleanedSets };
+};
+
+export const cleanWorkout = (
+  workout: WorkoutWithExercises
+): WorkoutWithExercises => {
+  const cleanedExercises = workout.exercises
+    .map(cleanExercise)
+    .filter((e) => e !== null);
+
+  return { ...workout, exercises: cleanedExercises };
 };
