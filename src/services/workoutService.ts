@@ -54,5 +54,34 @@ export const createExercise = (name: string, workoutId: string) => {
     workoutId,
     sets: [],
   };
+
+  const emptySet = createSet(newExercise.id);
+  newExercise.sets.push(emptySet);
   return newExercise;
+};
+
+export const createSet = (exerciseId: string) => {
+  const newSet: ExerciseSet = {
+    id: Crypto.randomUUID(),
+    exerciseId,
+  };
+  return newSet;
+};
+
+export const updateSet = (
+  set: ExerciseSet,
+  updatedFields: Pick<ExerciseSet, "weight" | "reps">
+) => {
+  const updatedSet = { ...set };
+  if (updatedFields.reps !== undefined) {
+    updatedSet.reps = updatedFields.reps;
+  }
+  if (updatedFields.weight !== undefined) {
+    updatedSet.weight = updatedFields.weight;
+  }
+
+  if (updatedSet.weight !== undefined && updatedSet.reps !== undefined) {
+    updatedSet.oneRM = updatedSet.weight * (36.0 / (37.0 - updatedSet.reps));
+  }
+  return updatedSet;
 };

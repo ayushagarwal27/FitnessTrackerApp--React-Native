@@ -4,6 +4,7 @@ import { ExerciseSet } from "@/types/models";
 import { StyleSheet } from "react-native";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import CustomButton from "../general/CustomButton";
+import { useWorkouts } from "@/store";
 
 interface SetItemProps {
   index: number;
@@ -14,11 +15,14 @@ export default function SetItem({ index, set }: SetItemProps) {
   const [weight, setWeight] = useState(set.weight?.toString() || "");
   const [reps, setReps] = useState(set.reps?.toString() || "");
 
+  const updateSet = useWorkouts((state) => state.updateSet);
+  const deleteSet = useWorkouts((state) => state.deleteSet);
+
   const handleWeightChange = () => {
-    console.log("weight changed to: ", weight);
+    updateSet(set.id, { weight: parseFloat(weight) });
   };
   const handleRepsChange = () => {
-    console.log("reps changed to: ", reps);
+    updateSet(set.id, { reps: parseInt(reps) });
   };
 
   const renderRightActions = () => (
@@ -27,7 +31,9 @@ export default function SetItem({ index, set }: SetItemProps) {
       style={{ width: "auto", padding: 5 }}
       type="link"
       color="crimson"
-      onPress={() => console.log("Deleting set: ", set.id)}
+      onPress={() => {
+        deleteSet(set.id);
+      }}
     />
   );
   return (
