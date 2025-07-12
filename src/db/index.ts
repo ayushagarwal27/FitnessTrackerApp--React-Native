@@ -1,5 +1,5 @@
-import { DbWorkout } from "@/types/db";
-import { Workout } from "@/types/models";
+import { DbExercise, DbWorkout } from "@/types/db";
+import { Exercise, Workout } from "@/types/models";
 import * as SQLite from "expo-sqlite";
 
 let db: SQLite.SQLiteDatabase | null = null;
@@ -13,11 +13,23 @@ const createWorkoutsTableQuery = `
     finished_at TEXT
   );`;
 
+export const createExercisesTableQuery = `
+  CREATE TABLE IF NOT EXISTS exercises (
+    id TEXT PRIMARY KEY, 
+    workout_id TEXT, 
+    name TEXT, 
+    FOREIGN KEY (workout_id) REFERENCES workouts (id)
+  );`;
+
 export const getDB = async () => {
   if (db) return db;
   db = await SQLite.openDatabaseAsync(dbName);
   // setup tables
-  await db.execAsync(createWorkoutsTableQuery);
+  await db.withTransactionAsync(async () => {
+    if (!db) return;
+    await db.execAsync(createWorkoutsTableQuery);
+    await db.execAsync(createExercisesTableQuery);
+  });
   return db;
 };
 
@@ -76,5 +88,54 @@ export const getWorkouts = async (): Promise<Workout[]> => {
   } catch (error) {
     console.log(error);
     return [];
+  }
+};
+
+export const saveExercise = async (exercise: Exercise) => {
+  try {
+    const db = await getDB();
+    const res = await db.runAsync(
+      "INSERT  INTO exercises(id, workout_id, name) VALUES(?, ?, ?)",
+      exercise.id,
+      exercise.workoutId,
+      exercise.name
+    );
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const parseExercise = (exercise: DbExercise): Exercise => {
+  return {
+    id: exercise.id,
+    workoutId: exercise.workout_id,
+    name: exercise.name,
+  };
+};
+
+export const getExercises = async (workoutId: string): Promise<Exercise[]> => {
+  try {
+    const db = await getDB();
+    const exercises = await db.getAllAsync<DbExercise>(
+      `
+        SELECT * FROM exercises
+        WHERE workout_id = ?
+      `,
+      workoutId
+    );
+    return exercises.map(parseExercise);
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
+export const deleteExercise = async (exerciseID: string) => {
+  try {
+    const db = await getDB();
+    await db.runAsync("DELETE FROM exercises WHERE id=?", exerciseID);
+  } catch (error) {
+    console.log(error);
   }
 };

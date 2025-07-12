@@ -1,4 +1,11 @@
-import { getCurrentWorkout, getWorkouts, saveWorkout } from "@/db";
+import {
+  deleteExercise,
+  getCurrentWorkout,
+  getExercises,
+  getWorkouts,
+  saveExercise,
+  saveWorkout,
+} from "@/db";
 import {
   ExerciseSet,
   ExerciseWithSets,
@@ -55,7 +62,7 @@ export const finishWorkout = async (workout: WorkoutWithExercises) => {
   return finishedWorkout;
 };
 
-export const createExercise = (name: string, workoutId: string) => {
+export const createExercise = async (name: string, workoutId: string) => {
   const newExercise: ExerciseWithSets = {
     id: Crypto.randomUUID(),
     name,
@@ -65,6 +72,7 @@ export const createExercise = (name: string, workoutId: string) => {
 
   const emptySet = createSet(newExercise.id);
   newExercise.sets.push(emptySet);
+  await saveExercise(newExercise);
   return newExercise;
 };
 
@@ -105,6 +113,7 @@ export const cleanSets = (sets: ExerciseSet[]) => {
 export const cleanExercise = (exercise: ExerciseWithSets) => {
   const cleanedSets = cleanSets(exercise.sets);
   if (cleanedSets.length === 0) return null;
+  deleteExercise(exercise.id);
   return { ...exercise, sets: cleanedSets };
 };
 
@@ -118,11 +127,18 @@ export const cleanWorkout = (
   return { ...workout, exercises: cleanedExercises };
 };
 
+const addExercisesToWorkout = async (
+  workout: Workout
+): Promise<WorkoutWithExercises> => {
+  const exercises = await getExercises(workout.id);
+  return { ...workout, exercises: exercises.map((e) => ({ ...e, sets: [] })) };
+};
+
 export const getCurrentWorkoutWithExercises =
   async (): Promise<WorkoutWithExercises | null> => {
     const workout = await getCurrentWorkout();
     if (workout) {
-      return { ...workout, exercises: [] };
+      return await addExercisesToWorkout(workout);
     }
     return workout;
   };
@@ -131,9 +147,8 @@ export const getWorkoutsWithExercises = async (): Promise<
   WorkoutWithExercises[]
 > => {
   const workouts = await getWorkouts();
-  const workoutsWithExercises = workouts.map((workout) => ({
-    ...workout,
-    exercises: [],
-  }));
-  return workoutsWithExercises;
+  const workoutWithExercises = await Promise.all(
+    workouts.map(addExercisesToWorkout)
+  );
+  return workoutWithExercises;
 };

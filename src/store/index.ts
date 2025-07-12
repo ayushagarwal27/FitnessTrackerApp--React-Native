@@ -8,11 +8,7 @@ import {
   getWorkoutsWithExercises,
   updateSet,
 } from "@/services/workoutService";
-import {
-  ExerciseSet,
-  ExerciseWithSets,
-  WorkoutWithExercises,
-} from "@/types/models";
+import { ExerciseSet, WorkoutWithExercises } from "@/types/models";
 import { current } from "immer";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
@@ -65,10 +61,10 @@ export const useWorkouts = create<State & Actions>()(
       });
     },
 
-    addExercise: (name) => {
+    addExercise: async (name) => {
       const currentWorkout = get().currentWorkout;
       if (!currentWorkout) return;
-      const newExercise = createExercise(name, currentWorkout.id);
+      const newExercise = await createExercise(name, currentWorkout.id);
       set((state) => {
         state.currentWorkout?.exercises.push(newExercise);
       });
