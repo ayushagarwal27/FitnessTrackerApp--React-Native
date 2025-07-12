@@ -1,11 +1,18 @@
+import { getCurrentWorkout } from "@/db";
 import {
   createExercise,
   createSet,
   finishWorkout,
   generateNewWorkout,
+  getCurrentWorkoutWithExercises,
+  getWorkoutsWithExercises,
   updateSet,
 } from "@/services/workoutService";
-import { ExerciseSet, WorkoutWithExercises } from "@/types/models";
+import {
+  ExerciseSet,
+  ExerciseWithSets,
+  WorkoutWithExercises,
+} from "@/types/models";
 import { current } from "immer";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
@@ -24,6 +31,7 @@ type Actions = {
     updatedFields: Pick<ExerciseSet, "reps" | "weight">
   ) => void;
   deleteSet: (setId: string) => void;
+  loadWorkouts: () => void;
 };
 
 export const useWorkouts = create<State & Actions>()(
@@ -32,17 +40,24 @@ export const useWorkouts = create<State & Actions>()(
     currentWorkout: null,
     workouts: [],
 
+    loadWorkouts: async () => {
+      set({
+        currentWorkout: await getCurrentWorkoutWithExercises(),
+        workouts: await getWorkoutsWithExercises(),
+      });
+    },
+
     // Actions
-    startWorkout: () => {
-      const newWorkout: WorkoutWithExercises = generateNewWorkout();
+    startWorkout: async () => {
+      const newWorkout: WorkoutWithExercises = await generateNewWorkout();
       set({ currentWorkout: newWorkout });
     },
 
-    finishWorkout: () => {
+    finishWorkout: async () => {
       const currentWorkout = get().currentWorkout;
       if (!currentWorkout) return;
 
-      const finishedWorkout = finishWorkout(currentWorkout);
+      const finishedWorkout = await finishWorkout(currentWorkout);
 
       set((state) => {
         state.currentWorkout = null;
